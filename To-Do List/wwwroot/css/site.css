@@ -1,0 +1,29 @@
+.gradient-custom {
+    background: radial-gradient(50% 123.47% at 50% 50%, #00ff94 0%, #720059 100%), linear-gradient(121.28deg, #669600 0%, #ff0000 100%), linear-gradient(360deg, #0029ff 0%, #8fff00 100%), radial-gradient(100% 164.72% at 100% 100%, #6100ff 0%, #00ff57 100%), radial-gradient(100% 148.07% at 0% 0%, #fff500 0%, #51d500 100%);
+    background-blend-mode: screen, color-dodge, overlay, difference, normal;
+}
+.task {
+    background-color: rgba(244, 246, 247, 0.8);
+}
+.task:hover {
+    background-color: rgba(244, 246, 247, 1);
+}
+.task:hover .delete-task-i {
+    opacity:1 !important;
+    transition:all .5s;
+}
+.delete-btn{
+    background-color:transparent;
+    border:none;
+    box-shadow:none;
+    outline:0;
+    padding:0;
+}
+.logout-a:hover{
+    border-radius:0.5rem !important;
+}
+@media screen and (max-width: 500px) {
+    .navs-responsive {
+        justify-content: center;
+    }
+}

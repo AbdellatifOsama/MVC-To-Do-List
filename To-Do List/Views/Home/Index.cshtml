@@ -1,0 +1,127 @@
+﻿@model IEnumerable<TaskEntity>
+@{
+    ViewData["Title"] = "Home";
+    var ActiveTasks = (List<TaskEntity>)ViewData["Active"];
+    var CompletedTasks = (List<TaskEntity>)ViewData["Completed"];
+}
+<!-- Tabs content -->
+<div class="tab-content" id="ex1-content">
+    <!--All Tab Content-->
+    <div class="tab-pane fade show active" id="ex1-tabs-1" role="tabpanel"
+         aria-labelledby="ex1-tab-1">
+        @if (Model.Any())
+        {
+            <ul class="list-group mb-0">
+                @foreach (var task in Model)
+                {
+                    if (task.IsDone)
+                    {
+                        <li class="list-group-item task d-flex justify-content-between align-items-center border-0 mb-2 rounded">
+                            <div class="d-flex">
+                                <form class="is-done-form" asp-controller="Task" asp-action="MakeTaskUnDone" asp-route-id="@task.Id">
+                                    <input class="is-done form-check-input me-2" type="checkbox" checked />
+                                </form>
+                                <s>@task.Name</s>
+                            </div>
+                            <form asp-controller="Task" asp-action="DeleteTask" asp-route-id="@task.Id">
+                                <button type="submit" class="delete-btn"><i class="fa-solid fa-xmark text-secondary opacity-0 delete-task-i"></i></button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="list-group-item task d-flex justify-content-between align-items-center border-0 mb-2 rounded">
+                            <div class="d-flex">
+                                <form class="is-done-form" asp-controller="Task" asp-action="MakeTaskDone" asp-route-id="@task.Id">
+                                    <input class="is-done form-check-input me-2" type="checkbox" />
+                                </form>
+                                <p class="mb-0">@task.Name</p>
+                            </div>
+                            <form asp-controller="Task" asp-action="DeleteTask" asp-route-id="@task.Id">
+                                <button type="submit" class="delete-btn"><i class="fa-solid fa-xmark text-secondary opacity-0 delete-task-i"></i></button>
+                            </form>
+                        </li>
+                    }
+                }
+            </ul>
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                No Tasks Found
+            </div>
+        }
+    </div>
+    <!--All Tab Content-->
+    <!--Active Tab Content-->
+    <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+        @if (ActiveTasks.Any())
+        {
+            <ul class="list-group mb-0">
+                @foreach (var task in ActiveTasks)
+                {
+                    <li class="list-group-item task d-flex justify-content-between align-items-center border-0 mb-2 rounded">
+                        <div class="d-flex">
+                            <form class="is-done-form" asp-controller="Task" asp-action="MakeTaskDone" asp-route-id="@task.Id">
+                                <input class="is-done form-check-input me-2" type="checkbox" />
+                            </form>
+                            <p class="mb-0">@task.Name</p>
+                        </div>
+                        <form asp-controller="Task" asp-action="DeleteTask" asp-route-id="@task.Id">
+                            <button type="submit" class="delete-btn"><i class="fa-solid fa-xmark text-secondary opacity-0 delete-task-i"></i></button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                No Active Tasks Found
+            </div>
+        }
+    </div>
+    <!--Active Tab Content-->
+    <!--Completed Tab Content-->
+    <div class="tab-pane fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+        @if (CompletedTasks.Any())
+        {
+            <ul class="list-group mb-0">
+                @foreach (var task in CompletedTasks)
+                {
+                    <li class="list-group-item task d-flex justify-content-between align-items-center border-0 mb-2 rounded">
+                        <div class="d-flex">
+                            <form class="is-done-form" asp-controller="Task" asp-action="MakeTaskUnDone" asp-route-id="@task.Id">
+                                <input class="is-done form-check-input me-2" type="checkbox" checked />
+                            </form>
+                            <s>@task.Name</s>
+                        </div>
+                        <form asp-controller="Task" asp-action="DeleteTask" asp-route-id="@task.Id">
+                            <button type="submit" class="delete-btn"><i class="fa-solid fa-xmark text-secondary opacity-0 delete-task-i"></i></button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                No Completed Tasks Found
+            </div>
+        }
+    </div>
+</div>
+<!--Completed Tab Content-->
+<!-- Tabs content -->
+@section IsDoneChangeState{
+    <script>
+        //Isdone Change State
+        var IsDoneInputs = Array.from(document.getElementsByClassName("is-done"));
+        var IsDoneForm = Array.from(document.getElementsByClassName("is-done-form"));
+        for (let i = 0; i < IsDoneInputs.length; i++) {
+            IsDoneInputs[i].addEventListener("click", function () {
+                IsDoneForm[i].submit();
+            })
+        }
+    </script>
+}

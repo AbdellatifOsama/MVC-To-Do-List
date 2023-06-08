@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Abdellatif Osama" />
+    <meta name="description" content="To-Do List App" />
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/1950/1950715.png">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/mdb-ui-kit/mdb.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="gradient-custom py-3 overflow-hidden">
+    <section class="vh-100">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                @RenderBody()
+            </div>
+        </div>
+    </section>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="~/lib/mdb-ui-kit/mdb.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("isTermsAgreed", required: false)
+</body>
+</html>

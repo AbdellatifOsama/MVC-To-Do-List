@@ -1,0 +1,118 @@
+﻿@inject UserManager<ApplicationUser> UserManager
+@{
+    var SignedInUser = await UserManager.GetUserAsync(User);
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Abdellatif Osama" />
+    <meta name="description" content="To-Do List App" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/1950/1950715.png">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/mdb-ui-kit/mdb.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="gradient-custom">
+    <div class="dropdown position-absolute end-0 me-2 mt-2">
+        <button class="bg-transparent border-0 me-2 text-white dropdown-toggle" type="button" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
+            @SignedInUser.UserName
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li>
+                <form asp-controller="account" asp-action="Logout">
+                    <button type="submit" class="logout-a dropdown-item">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+    <section class="vh-100 overflow-auto">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-xl-10">
+                    <div class="card">
+                        <div class="card-body p-5">
+                            <!--Add New Task-->
+                            <div class="d-flex justify-content-center mb-4 w-100 align-items-center">
+                                <form id="add-new-task-form" class="d-flex justify-content-center align-items-center mb-0 w-75" asp-controller="task" asp-action="AddTask">
+                                    <div class="form-outline flex-fill">
+                                        <input name="Task" type="text" id="form2" class="form-control" />
+                                        <input name="UserId" type="text" value="@SignedInUser.Id" id="form2" class="form-control" hidden />
+                                        <label class="form-label" for="form2">New task</label>
+                                    </div>
+                                </form>
+                                <button id="add-task-btn" type="submit" class="btn btn-info ms-2" disabled>Add</button>
+                            </div>
+                            <div id="add-error-alert" class="d-flex justify-content-center d-none">
+                                <div class="position-relative alert alert-danger w-75 py-2" role="alert">
+                                    The Task Name Length Must be More Than 2 Characters
+                                    <button id="close-error-alert-btn" class="delete-btn"><i class="fa-solid fa-xmark text-secondary position-absolute end-0 top-50 translate-middle-y me-3"></i></button>
+                                </div>
+                            </div>
+                            <!--Add New Task-->
+                            <!-- Tabs navs -->
+                            <ul class="nav nav-tabs mb-4 pb-2 navs-responsive justify-content-sm-center justify-content-md-start" id="ex1" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active px-3 px-sm-4" id="ex1-tab-1" data-mdb-toggle="tab" href="#ex1-tabs-1" role="tab"
+                                       aria-controls="ex1-tabs-1" aria-selected="true">All</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link px-3 px-sm-4" id="ex1-tab-2" data-mdb-toggle="tab" href="#ex1-tabs-2" role="tab"
+                                       aria-controls="ex1-tabs-2" aria-selected="false">Active</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link px-3 px-sm-4" id="ex1-tab-3" data-mdb-toggle="tab" href="#ex1-tabs-3" role="tab"
+                                       aria-controls="ex1-tabs-3" aria-selected="false">Completed</a>
+                                </li>
+                            </ul>
+                            <!-- Tabs navs -->
+                            <!-- Tabs content -->
+                            @RenderBody()
+                            <!-- Tabs content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        //alert dismiss
+        var AddErrorAlert = document.getElementById("add-error-alert");
+        var CloseErrorAlertBtn = document.getElementById("close-error-alert-btn");
+        CloseErrorAlertBtn.addEventListener('click', function () {
+            AddErrorAlert.classList.add("d-none");
+        })
+        //make button disabled untill validation occur
+        var AddTaskBtn = document.getElementById("add-task-btn");
+        var NewTaskInput = document.getElementById("form2");
+        var AddNewTaskForm = document.getElementById("add-new-task-form");
+        NewTaskInput.addEventListener('keyup', function () {
+            if (NewTaskInput.value.length > 2) {
+                AddTaskBtn.attributes.removeNamedItem("disabled");
+            }
+            else {
+                AddTaskBtn.setAttribute("disabled", "true");
+            }
+        })
+        //check on click if the task name is valid or not
+        AddTaskBtn.addEventListener("click", function () {
+            if (!(NewTaskInput.value.length > 2)) {
+                AddErrorAlert.classList.remove("d-none");
+                AddTaskBtn.setAttribute("disabled", "true");
+            }
+            else {
+                AddNewTaskForm.submit();
+                AddErrorAlert.classList.add("d-none");
+            }
+        })
+    </script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="~/lib/mdb-ui-kit/mdb.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("IsDoneChangeState", required: false)
+</body>
+</html>

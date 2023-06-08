@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "bootstrap@5.2.3",
+      "destination": "wwwroot/lib/bootstrap/",
+      "files": [
+        "js/bootstrap.bundle.min.js",
+        "js/bootstrap.bundle.min.js.map",
+        "css/bootstrap.min.css",
+        "css/bootstrap.min.css.map"
+      ]
+    },
+    {
+      "library": "font-awesome@6.4.0",
+      "destination": "wwwroot/lib/font-awesome/",
+      "files": [
+        "css/all.min.css",
+        "webfonts/fa-brands-400.ttf",
+        "webfonts/fa-brands-400.woff2",
+        "webfonts/fa-regular-400.ttf",
+        "webfonts/fa-regular-400.woff2",
+        "webfonts/fa-solid-900.ttf",
+        "webfonts/fa-solid-900.woff2",
+        "webfonts/fa-v4compatibility.ttf",
+        "webfonts/fa-v4compatibility.woff2"
+      ]
+    },
+    {
+      "library": "mdbootstrap@4.20.0",
+      "destination": "wwwroot/lib/mdbootstrap/",
+      "files": [
+        "js/mdb.min.js",
+        "css/mdb.min.css",
+        "css/mdb.min.css.map",
+        "js/mdb.min.js.map"
+      ]
+    },
+    {
+      "library": "mdb-ui-kit@6.2.0",
+      "destination": "wwwroot/lib/mdb-ui-kit/",
+      "files": [
+        "mdb.min.js",
+        "mdb.min.css",
+        "mdb.min.css.map",
+        "mdb.min.js.map"
+      ]
+    }
+  ]
+}
